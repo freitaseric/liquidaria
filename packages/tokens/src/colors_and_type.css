@@ -1,0 +1,388 @@
+/* ============================================================
+   Liquidaria Design System — Tokens
+   Minimalist like MD3 · Accessible like GovBr-DS · Modern like Liquid Glass
+   ============================================================ */
+
+/* -------- Web Fonts (Google Fonts) --------
+   Geist + Geist Mono are the primary type families.
+   Newsreader is the editorial / display serif.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap');
+
+:root {
+  /* ============================================================
+     1. COLOR — Brand Primaries
+     Derived from GovBr-DS institutional blues, refined for MD3
+     tonal balance and tested for AA contrast on white & ink.
+     ============================================================ */
+
+  --brand-50:  #EDF5FF;   /* weak blue tint, glass tints */
+  --brand-100: #DCE9FF;
+  --brand-200: #B7CFFE;
+  --brand-300: #7FA8F8;
+  --brand-400: #4A85F0;
+  --brand-500: #1351B4;   /* GovBr signature — primary */
+  --brand-600: #0E3F8F;
+  --brand-700: #0B3274;
+  --brand-800: #08245A;
+  --brand-900: #051640;
+  --brand-ink: #03102E;
+
+  /* ============================================================
+     2. COLOR — Neutrals (MD3 tonal scale)
+     Cool-leaning ink with a touch of warmth at the high end.
+     ============================================================ */
+
+  --ink-0:   #FFFFFF;
+  --ink-25:  #FBFBFD;
+  --ink-50:  #F5F5F8;
+  --ink-100: #ECECF1;
+  --ink-200: #DCDCE3;
+  --ink-300: #C2C2CC;
+  --ink-400: #9A9AA6;
+  --ink-500: #6E6E7A;
+  --ink-600: #4C4C56;
+  --ink-700: #34343C;
+  --ink-800: #1F1F26;
+  --ink-900: #121218;
+  --ink-1000: #07070B;
+
+  /* ============================================================
+     3. COLOR — Semantic (GovBr accessibility palette, retuned)
+     ============================================================ */
+
+  --success-50:  #E3F5E1;
+  --success-500: #168821;
+  --success-700: #154C21;
+
+  --warning-50:  #FFF1E0;
+  --warning-500: #FF580A;
+  --warning-700: #A33500;
+
+  --danger-50:   #FFF3F2;
+  --danger-500:  #E60000;
+  --danger-700:  #990000;
+
+  --info-50:     #E3EBF8;
+  --info-500:    #2670E8;
+  --info-700:    #16316B;
+
+  /* ============================================================
+     4. COLOR — Semantic surface roles (light theme)
+     ============================================================ */
+
+  --bg:           var(--ink-25);
+  --bg-elev:      var(--ink-0);
+  --bg-sunken:    var(--ink-50);
+  --fg:           var(--ink-900);
+  --fg-muted:     var(--ink-600);
+  --fg-subtle:    var(--ink-400);
+  --fg-on-brand:  var(--ink-0);
+  --border:       var(--ink-200);
+  --border-strong:var(--ink-300);
+  --focus-ring:   var(--brand-400);
+
+  /* ============================================================
+     5. COLOR — Liquid Glass tints
+     Use as background-color on .glass surfaces. Always pair
+     with backdrop-filter: blur(20-40px) saturate(140%).
+     ============================================================ */
+
+  --glass-clear:    color-mix(in oklab, white 55%, transparent);
+  --glass-frost:    color-mix(in oklab, white 72%, transparent);
+  --glass-tint:     color-mix(in oklab, var(--brand-50) 60%, transparent);
+  --glass-dark:     color-mix(in oklab, var(--ink-900) 55%, transparent);
+  --glass-edge:     color-mix(in oklab, white 80%, transparent);
+
+  /* ============================================================
+     6. TYPE — Families
+     ============================================================ */
+
+  --font-sans:   "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif:  "Newsreader", ui-serif, Georgia, "Times New Roman", serif;
+  --font-mono:   "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* ============================================================
+     7. TYPE — Scale (1.200 minor third, accessible floors)
+     Values in px for clarity; convert to rem at use sites.
+     ============================================================ */
+
+  --fs-2xs:  11px;
+  --fs-xs:   12px;
+  --fs-sm:   14px;
+  --fs-md:   16px;   /* body base — never smaller for paragraph */
+  --fs-lg:   18px;
+  --fs-xl:   22px;
+  --fs-2xl:  28px;
+  --fs-3xl:  36px;
+  --fs-4xl:  48px;
+  --fs-5xl:  64px;
+  --fs-6xl:  84px;
+
+  --lh-tight:  1.1;
+  --lh-snug:   1.25;
+  --lh-normal: 1.5;
+  --lh-loose:  1.7;
+
+  --fw-light:    300;
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  --tracking-tight:   -0.02em;
+  --tracking-snug:    -0.01em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.04em;
+  --tracking-caps:    0.08em;
+
+  /* ============================================================
+     8. SPACING — 4-pt base, named like GovBr (1..80)
+     ============================================================ */
+
+  --sp-0:   0;
+  --sp-1:   4px;
+  --sp-2:   8px;
+  --sp-3:   12px;
+  --sp-4:   16px;
+  --sp-5:   20px;
+  --sp-6:   24px;
+  --sp-7:   28px;
+  --sp-8:   32px;
+  --sp-10:  40px;
+  --sp-12:  48px;
+  --sp-16:  64px;
+  --sp-20:  80px;
+  --sp-24:  96px;
+  --sp-32:  128px;
+
+  /* ============================================================
+     9. RADII — Soft, generous (MD3 + liquid pill influence)
+     ============================================================ */
+
+  --r-xs:   4px;
+  --r-sm:   8px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-xl:   24px;
+  --r-2xl:  32px;
+  --r-pill: 999px;
+  --r-circle: 50%;
+
+  /* ============================================================
+     10. ELEVATION — Layered shadows + glass-aware variants
+     ============================================================ */
+
+  --shadow-1: 0 1px 2px 0 rgba(7, 7, 11, 0.04),
+              0 1px 1px 0 rgba(7, 7, 11, 0.03);
+  --shadow-2: 0 2px 4px -1px rgba(7, 7, 11, 0.06),
+              0 4px 8px -2px rgba(7, 7, 11, 0.06);
+  --shadow-3: 0 4px 8px -2px rgba(7, 7, 11, 0.08),
+              0 12px 24px -6px rgba(7, 7, 11, 0.10);
+  --shadow-4: 0 8px 16px -4px rgba(7, 7, 11, 0.10),
+              0 24px 48px -12px rgba(7, 7, 11, 0.14);
+
+  --shadow-glass: 0 1px 0 0 rgba(255,255,255,0.6) inset,
+                  0 -1px 1px 0 rgba(255,255,255,0.3) inset,
+                  0 12px 32px -8px rgba(7, 7, 11, 0.16),
+                  0 2px 6px -2px rgba(7, 7, 11, 0.08);
+
+  --ring-focus: 0 0 0 3px color-mix(in oklab, var(--focus-ring) 35%, transparent);
+
+  /* ============================================================
+     11. MOTION
+     ============================================================ */
+
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 320ms;
+  --dur-4: 500ms;
+
+  /* ============================================================
+     12. LAYOUT
+     ============================================================ */
+
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1440px;
+}
+
+/* ============================================================
+   Dark theme — flips surface roles, keeps brand recognizable.
+   ============================================================ */
+:root[data-theme="dark"],
+.theme-dark {
+  --bg:           var(--ink-1000);
+  --bg-elev:      var(--ink-900);
+  --bg-sunken:    #000;
+  --fg:           var(--ink-50);
+  --fg-muted:     var(--ink-300);
+  --fg-subtle:    var(--ink-400);
+  --fg-on-brand:  var(--ink-0);
+  --border:       var(--ink-700);
+  --border-strong:var(--ink-600);
+
+  --glass-clear:  color-mix(in oklab, white 8%, transparent);
+  --glass-frost:  color-mix(in oklab, white 14%, transparent);
+  --glass-tint:   color-mix(in oklab, var(--brand-400) 18%, transparent);
+  --glass-dark:   color-mix(in oklab, var(--ink-1000) 65%, transparent);
+  --glass-edge:   color-mix(in oklab, white 20%, transparent);
+
+  --shadow-glass: 0 1px 0 0 rgba(255,255,255,0.12) inset,
+                  0 -1px 1px 0 rgba(255,255,255,0.05) inset,
+                  0 12px 32px -8px rgba(0, 0, 0, 0.55),
+                  0 2px 6px -2px rgba(0, 0, 0, 0.35);
+}
+
+/* ============================================================
+   Semantic typography classes — apply to elements or wrap text.
+   ============================================================ */
+
+.display-1 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-6xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  font-weight: var(--fw-medium);
+  color: var(--fg);
+}
+.display-2 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-5xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  font-weight: var(--fw-medium);
+  color: var(--fg);
+}
+
+.h1 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-4xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  font-weight: var(--fw-semibold);
+  color: var(--fg);
+}
+.h2 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-snug);
+  font-weight: var(--fw-semibold);
+  color: var(--fg);
+}
+.h3 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-snug);
+  font-weight: var(--fw-semibold);
+  color: var(--fg);
+}
+.h4 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+  font-weight: var(--fw-semibold);
+  color: var(--fg);
+}
+.h5 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+  font-weight: var(--fw-semibold);
+  color: var(--fg);
+}
+
+.editorial {
+  font-family: var(--font-serif);
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-snug);
+  font-weight: 400;
+  letter-spacing: var(--tracking-snug);
+  color: var(--fg);
+}
+
+.lead {
+  font-family: var(--font-sans);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-normal);
+  font-weight: var(--fw-regular);
+  color: var(--fg-muted);
+}
+
+.body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  font-weight: var(--fw-regular);
+  color: var(--fg);
+}
+.body-sm {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  color: var(--fg);
+}
+
+.caption {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-snug);
+  color: var(--fg-muted);
+}
+
+.overline {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-weight: var(--fw-semibold);
+  color: var(--fg-muted);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  color: var(--fg);
+}
+
+/* ============================================================
+   Glass utility — the visual signature of Liquidaria.
+   Apply to surfaces that should refract their backdrop.
+   ============================================================ */
+.glass {
+  background: var(--glass-frost);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--shadow-glass);
+  border-radius: var(--r-xl);
+}
+.glass--clear   { background: var(--glass-clear); }
+.glass--tinted  { background: var(--glass-tint); }
+.glass--dark    { background: var(--glass-dark); color: var(--ink-0); }
+
+/* ============================================================
+   Accessibility — GovBr commitment kept verbatim
+   ============================================================ */
+*:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+  border-radius: inherit;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
