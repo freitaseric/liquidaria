@@ -44,13 +44,13 @@ Renders any [Lucide](https://lucide.dev) icon by PascalCase name.
 <Button variant="primary" size="md" icon="Plus">New item</Button>
 ```
 
-| Prop | Type | Default |
-|------|------|---------|
-| `variant` | `'primary' \| 'ink' \| 'secondary' \| 'ghost' \| 'danger' \| 'glass'` | `'primary'` |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` |
-| `icon` | `LucideIconName` | — |
-| `iconRight` | `LucideIconName` | — |
-| `full` | `boolean` | `false` |
+| Prop        | Type                                                                  | Default     |
+| ----------- | --------------------------------------------------------------------- | ----------- |
+| `variant`   | `'primary' \| 'ink' \| 'secondary' \| 'ghost' \| 'danger' \| 'glass'` | `'primary'` |
+| `size`      | `'sm' \| 'md' \| 'lg'`                                                | `'md'`      |
+| `icon`      | `LucideIconName`                                                      | —           |
+| `iconRight` | `LucideIconName`                                                      | —           |
+| `full`      | `boolean`                                                             | `false`     |
 
 ### `Input`
 
@@ -58,12 +58,12 @@ Renders any [Lucide](https://lucide.dev) icon by PascalCase name.
 <Input label="Password" type="password" error="Incorrect password." />
 ```
 
-| Prop | Type |
-|------|------|
-| `label` | `string` |
-| `hint` | `string` |
-| `error` | `string` |
-| `icon` | `LucideIconName` |
+| Prop    | Type             |
+| ------- | ---------------- |
+| `label` | `string`         |
+| `hint`  | `string`         |
+| `error` | `string`         |
+| `icon`  | `LucideIconName` |
 
 ### `Card`
 
