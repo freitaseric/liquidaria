@@ -1,2 +1,2 @@
-export { Pill } from './Pill'
-export type { PillProps, PillTone } from './Pill'
+export { Badge, badgeVariants } from './Badge'
+export type { BadgeProps, BadgeVariant } from './Badge'

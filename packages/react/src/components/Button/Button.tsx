@@ -1,70 +1,86 @@
 import React from 'react'
+import { Slot } from '@radix-ui/react-slot'
+import { cva, type VariantProps } from 'class-variance-authority'
+import { cn } from '../../lib/cn'
 import { Icon } from '../Icon'
-import type { LucideIconName } from '../Icon'
 
-export type ButtonVariant = 'primary' | 'ink' | 'secondary' | 'ghost' | 'danger' | 'glass'
-export type ButtonSize = 'sm' | 'md' | 'lg'
+const buttonVariants = cva(
+  [
+    'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-pill font-semibold',
+    'transition-[transform,box-shadow,background-color,color] duration-1 ease-out',
+    'active:scale-[0.97]',
+    'focus-visible:outline-none',
+    'disabled:pointer-events-none disabled:opacity-50',
+    "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-[1.1em] [&_svg]:shrink-0",
+  ],
+  {
+    variants: {
+      variant: {
+        default:
+          'bg-primary text-primary-foreground shadow-2 hover:bg-brand-600',
+        destructive:
+          'bg-destructive text-destructive-foreground shadow-2 hover:bg-danger-700',
+        outline:
+          'bg-card text-brand-700 border border-brand-200 hover:bg-accent',
+        secondary:
+          'bg-secondary text-secondary-foreground hover:bg-muted',
+        ghost:
+          'bg-transparent text-foreground hover:bg-muted',
+        link:
+          'bg-transparent text-primary underline-offset-4 hover:underline',
+        glass:
+          'glass text-foreground rounded-pill border-white/80 hover:bg-glass-clear',
+      },
+      size: {
+        sm:   'h-9  px-3.5 text-[13px]',
+        md:   'h-10 px-4.5 text-sm',
+        lg:   'h-12 px-5.5 text-[15px]',
+        icon: 'size-10 p-0',
+      },
+      fullWidth: {
+        true: 'w-full',
+        false: '',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'md',
+      fullWidth: false,
+    },
+  },
+)
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant
-  size?: ButtonSize
-  icon?: LucideIconName
-  iconRight?: LucideIconName
-  full?: boolean
-}
+export type ButtonVariant = NonNullable<VariantProps<typeof buttonVariants>['variant']>
+export type ButtonSize = NonNullable<VariantProps<typeof buttonVariants>['size']>
 
-const sizes: Record<ButtonSize, { padding: string; fontSize: number }> = {
-  sm: { padding: '8px 14px',  fontSize: 13 },
-  md: { padding: '10px 18px', fontSize: 14 },
-  lg: { padding: '13px 22px', fontSize: 15 },
-}
-
-const variants: Record<ButtonVariant, React.CSSProperties> = {
-  primary:   { background: 'var(--brand-500)', color: '#fff', border: '0', boxShadow: '0 2px 4px -1px rgba(7,7,11,.06), 0 4px 8px -2px rgba(7,7,11,.06)' },
-  ink:       { background: 'var(--ink-900)',   color: '#fff', border: '0', boxShadow: '0 2px 4px -1px rgba(7,7,11,.06)' },
-  secondary: { background: '#fff', color: 'var(--brand-700)', border: '1px solid var(--brand-200)' },
-  ghost:     { background: 'transparent', color: 'var(--fg)', border: '0' },
-  danger:    { background: 'var(--danger-500)', color: '#fff', border: '0' },
-  glass:     { background: 'color-mix(in oklab, white 72%, transparent)', color: 'var(--fg)', border: '1px solid rgba(255,255,255,.8)', boxShadow: 'var(--shadow-glass)', backdropFilter: 'blur(28px) saturate(160%)' },
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
+  loading?: boolean
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, variant = 'primary', size = 'md', icon, iconRight, disabled, full, style, ...rest }, ref) => {
-    const [pressed, setPressed] = React.useState(false)
-    const s = sizes[size]
-    const v = variants[variant]
-
+  (
+    { className, variant, size, fullWidth, asChild = false, loading = false, disabled, children, ...rest },
+    ref,
+  ) => {
+    const Comp = asChild ? Slot : 'button'
     return (
-      <button
+      <Comp
         ref={ref}
-        disabled={disabled}
-        onMouseDown={() => setPressed(true)}
-        onMouseUp={() => setPressed(false)}
-        onMouseLeave={() => setPressed(false)}
-        style={{
-          font: `600 ${s.fontSize}px/1 var(--font-sans)`,
-          padding: s.padding,
-          borderRadius: 999,
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 8,
-          width: full ? '100%' : 'auto',
-          cursor: disabled ? 'not-allowed' : 'pointer',
-          opacity: disabled ? 0.5 : 1,
-          transform: pressed && !disabled ? 'scale(0.97)' : 'scale(1)',
-          transition: 'transform var(--dur-1) var(--ease-out), box-shadow var(--dur-2) var(--ease-out)',
-          ...v,
-          ...style,
-        }}
+        className={cn(buttonVariants({ variant, size, fullWidth }), className)}
+        disabled={disabled || loading}
+        aria-busy={loading || undefined}
         {...rest}
       >
-        {icon && <Icon name={icon} size={s.fontSize + 2} />}
+        {loading && <Icon name="LoaderCircle" className="animate-spin" />}
         {children}
-        {iconRight && <Icon name={iconRight} size={s.fontSize + 2} />}
-      </button>
+      </Comp>
     )
-  }
+  },
 )
 
 Button.displayName = 'Button'
+
+export { buttonVariants }

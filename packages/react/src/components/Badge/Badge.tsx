@@ -1,55 +1,60 @@
 import React from 'react'
+import { Slot } from '@radix-ui/react-slot'
+import { cva, type VariantProps } from 'class-variance-authority'
+import { cn } from '../../lib/cn'
 
-export type PillTone = 'neutral' | 'brand' | 'success' | 'warning' | 'danger' | 'info'
-
-export interface PillProps extends React.HTMLAttributes<HTMLSpanElement> {
-  tone?: PillTone
-  dot?: boolean
-  active?: boolean
-}
-
-const tones: Record<PillTone, React.CSSProperties> = {
-  neutral: { background: '#fff',               color: 'var(--fg)',          border: '1px solid var(--border)' },
-  brand:   { background: 'var(--brand-50)',    color: 'var(--brand-700)',   border: '1px solid var(--brand-200)' },
-  success: { background: 'var(--success-50)',  color: 'var(--success-700)' },
-  warning: { background: 'var(--warning-50)',  color: 'var(--warning-700)' },
-  danger:  { background: 'var(--danger-50)',   color: 'var(--danger-700)'  },
-  info:    { background: 'var(--info-50)',      color: 'var(--info-700)'    },
-}
-
-const activeStyle: React.CSSProperties = {
-  background: 'var(--ink-900)',
-  color: '#fff',
-  border: '0',
-}
-
-export const Pill = React.forwardRef<HTMLSpanElement, PillProps>(
-  ({ children, tone = 'neutral', dot, active, style, ...rest }, ref) => {
-    const toneStyle = tone === 'neutral' && active ? activeStyle : tones[tone]
-
-    return (
-      <span
-        ref={ref}
-        style={{
-          font: '600 12px var(--font-sans)',
-          padding: '5px 11px',
-          borderRadius: 999,
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 6,
-          cursor: rest.onClick ? 'pointer' : 'default',
-          ...toneStyle,
-          ...style,
-        }}
-        {...rest}
-      >
-        {dot && (
-          <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'currentColor', opacity: 0.7, flexShrink: 0 }} />
-        )}
-        {children}
-      </span>
-    )
-  }
+const badgeVariants = cva(
+  [
+    'inline-flex items-center gap-1.5 rounded-pill border px-2.5 py-1',
+    'text-xs font-semibold whitespace-nowrap',
+    'transition-colors duration-1 ease-out',
+    "[&_svg]:size-3 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  ],
+  {
+    variants: {
+      variant: {
+        default:     'bg-accent text-accent-foreground border-brand-200',
+        secondary:   'bg-secondary text-secondary-foreground border-border',
+        outline:     'bg-transparent text-foreground border-border',
+        success:     'bg-success-50 text-success-700 border-transparent',
+        warning:     'bg-warning-50 text-warning-700 border-transparent',
+        destructive: 'bg-danger-50 text-danger-700 border-transparent',
+        info:        'bg-info-50 text-info-700 border-transparent',
+        solid:       'bg-foreground text-background border-transparent',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  },
 )
 
-Pill.displayName = 'Pill'
+export type BadgeVariant = NonNullable<VariantProps<typeof badgeVariants>['variant']>
+
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLSpanElement>,
+    VariantProps<typeof badgeVariants> {
+  asChild?: boolean
+  dot?: boolean
+}
+
+export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
+  ({ className, variant, asChild = false, dot, children, ...rest }, ref) => {
+    const Comp = asChild ? Slot : 'span'
+    return (
+      <Comp
+        ref={ref}
+        data-slot="badge"
+        className={cn(badgeVariants({ variant }), className)}
+        {...rest}
+      >
+        {dot && <span aria-hidden className="size-1.5 rounded-full bg-current opacity-70" />}
+        {children}
+      </Comp>
+    )
+  },
+)
+
+Badge.displayName = 'Badge'
+
+export { badgeVariants }

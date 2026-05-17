@@ -1,60 +1,80 @@
 import React from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
+import { cn } from '../../lib/cn'
 
-export type AvatarTone = 'brand' | 'warm' | 'green' | 'plum'
-
-export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
-  initials?: string
-  src?: string
-  size?: number
-  tone?: AvatarTone
-}
-
-const gradients: Record<AvatarTone, [string, string]> = {
-  brand: ['#4A85F0', '#0E3F8F'],
-  warm:  ['#FF9F66', '#FF580A'],
-  green: ['#5DC25E', '#168821'],
-  plum:  ['#B07FF8', '#7140B4'],
-}
-
-export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
-  ({ initials, src, size = 40, tone = 'brand', style, ...rest }, ref) => {
-    if (src) {
-      return (
-        <img
-          src={src}
-          alt={initials}
-          width={size}
-          height={size}
-          style={{ borderRadius: '50%', objectFit: 'cover', display: 'block', ...style as React.CSSProperties }}
-        />
-      )
-    }
-
-    const [a, b] = gradients[tone]
-
-    return (
-      <div
-        ref={ref}
-        style={{
-          width: size,
-          height: size,
-          borderRadius: '50%',
-          background: `linear-gradient(135deg, ${a}, ${b})`,
-          color: '#fff',
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          font: `600 ${size * 0.4}px var(--font-sans)`,
-          letterSpacing: '-0.02em',
-          flexShrink: 0,
-          ...style,
-        }}
-        {...rest}
-      >
-        {initials}
-      </div>
-    )
-  }
+const avatarVariants = cva(
+  'relative inline-flex items-center justify-center overflow-hidden rounded-full text-primary-foreground font-semibold shrink-0 select-none',
+  {
+    variants: {
+      tone: {
+        brand: 'bg-gradient-to-br from-brand-400 to-brand-600',
+        warm:  'bg-gradient-to-br from-warning-500 to-warning-700',
+        green: 'bg-gradient-to-br from-success-500 to-success-700',
+        plum:  'bg-gradient-to-br from-[#B07FF8] to-[#7140B4]',
+      },
+      size: {
+        sm: 'size-8  text-xs',
+        md: 'size-10 text-sm',
+        lg: 'size-14 text-base',
+        xl: 'size-20 text-xl',
+      },
+    },
+    defaultVariants: {
+      tone: 'brand',
+      size: 'md',
+    },
+  },
 )
 
+export type AvatarTone = NonNullable<VariantProps<typeof avatarVariants>['tone']>
+export type AvatarSize = NonNullable<VariantProps<typeof avatarVariants>['size']>
+
+export interface AvatarProps
+  extends React.HTMLAttributes<HTMLSpanElement>,
+    VariantProps<typeof avatarVariants> {}
+
+export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(
+  ({ className, tone, size, ...rest }, ref) => (
+    <span
+      ref={ref}
+      data-slot="avatar"
+      className={cn(avatarVariants({ tone, size }), className)}
+      {...rest}
+    />
+  ),
+)
 Avatar.displayName = 'Avatar'
+
+export type AvatarImageProps = React.ImgHTMLAttributes<HTMLImageElement>
+
+export const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
+  ({ className, alt = '', ...rest }, ref) => (
+    <img
+      ref={ref}
+      alt={alt}
+      data-slot="avatar-image"
+      className={cn('size-full object-cover', className)}
+      {...rest}
+    />
+  ),
+)
+AvatarImage.displayName = 'AvatarImage'
+
+export type AvatarFallbackProps = React.HTMLAttributes<HTMLSpanElement>
+
+export const AvatarFallback = React.forwardRef<HTMLSpanElement, AvatarFallbackProps>(
+  ({ className, ...rest }, ref) => (
+    <span
+      ref={ref}
+      data-slot="avatar-fallback"
+      className={cn(
+        'flex size-full items-center justify-center tracking-tighter',
+        className,
+      )}
+      {...rest}
+    />
+  ),
+)
+AvatarFallback.displayName = 'AvatarFallback'
+
+export { avatarVariants }

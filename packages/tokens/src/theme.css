@@ -1,0 +1,328 @@
+/* ============================================================
+   Liquidaria Design System — Tailwind v4 Theme
+   Minimalist like MD3 · Accessible like GovBr-DS · Modern like Liquid Glass
+
+   Consume from your app's main stylesheet:
+
+     @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap');
+     @import "tailwindcss";
+     @import "@liquidaria/tokens/theme.css";
+     @source "../node_modules/@liquidaria/react";
+
+   The Google Fonts @import must come first because CSS @import rules must
+   precede all other rules. If you self-host the fonts, you can omit it.
+   ============================================================ */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* ============================================================
+     1. COLOR — Brand scale (GovBr-DS institutional blue)
+     Utilities: bg-brand-500, text-brand-700, ring-brand-400, etc.
+     ============================================================ */
+  --color-brand-50:  #EDF5FF;
+  --color-brand-100: #DCE9FF;
+  --color-brand-200: #B7CFFE;
+  --color-brand-300: #7FA8F8;
+  --color-brand-400: #4A85F0;
+  --color-brand-500: #1351B4;
+  --color-brand-600: #0E3F8F;
+  --color-brand-700: #0B3274;
+  --color-brand-800: #08245A;
+  --color-brand-900: #051640;
+  --color-brand-ink: #03102E;
+
+  /* ============================================================
+     2. COLOR — Neutral (MD3 tonal scale)
+     ============================================================ */
+  --color-ink-0:    #FFFFFF;
+  --color-ink-25:   #FBFBFD;
+  --color-ink-50:   #F5F5F8;
+  --color-ink-100:  #ECECF1;
+  --color-ink-200:  #DCDCE3;
+  --color-ink-300:  #C2C2CC;
+  --color-ink-400:  #9A9AA6;
+  --color-ink-500:  #6E6E7A;
+  --color-ink-600:  #4C4C56;
+  --color-ink-700:  #34343C;
+  --color-ink-800:  #1F1F26;
+  --color-ink-900:  #121218;
+  --color-ink-1000: #07070B;
+
+  /* ============================================================
+     3. COLOR — Semantic accents (GovBr accessibility palette)
+     ============================================================ */
+  --color-success-50:  #E3F5E1;
+  --color-success-500: #168821;
+  --color-success-700: #154C21;
+
+  --color-warning-50:  #FFF1E0;
+  --color-warning-500: #FF580A;
+  --color-warning-700: #A33500;
+
+  --color-danger-50:   #FFF3F2;
+  --color-danger-500:  #E60000;
+  --color-danger-700:  #990000;
+
+  --color-info-50:     #E3EBF8;
+  --color-info-500:    #2670E8;
+  --color-info-700:    #16316B;
+
+  /* ============================================================
+     4. COLOR — Semantic surface roles (shadcn-style)
+     Utilities: bg-background, text-foreground, border-border, ring-ring
+     Auto-flips under the .dark variant.
+     ============================================================ */
+  --color-background:           var(--color-ink-25);
+  --color-foreground:           var(--color-ink-900);
+
+  --color-card:                 var(--color-ink-0);
+  --color-card-foreground:      var(--color-ink-900);
+
+  --color-popover:              var(--color-ink-0);
+  --color-popover-foreground:   var(--color-ink-900);
+
+  --color-primary:              var(--color-brand-500);
+  --color-primary-foreground:   var(--color-ink-0);
+
+  --color-secondary:            var(--color-ink-50);
+  --color-secondary-foreground: var(--color-ink-900);
+
+  --color-muted:                var(--color-ink-100);
+  --color-muted-foreground:     var(--color-ink-600);
+
+  --color-accent:               var(--color-brand-50);
+  --color-accent-foreground:    var(--color-brand-700);
+
+  --color-destructive:          var(--color-danger-500);
+  --color-destructive-foreground: var(--color-ink-0);
+
+  --color-success:              var(--color-success-500);
+  --color-success-foreground:   var(--color-ink-0);
+
+  --color-warning:              var(--color-warning-500);
+  --color-warning-foreground:   var(--color-ink-0);
+
+  --color-info:                 var(--color-info-500);
+  --color-info-foreground:      var(--color-ink-0);
+
+  --color-border:               var(--color-ink-200);
+  --color-border-strong:        var(--color-ink-300);
+  --color-input:                var(--color-ink-300);
+  --color-ring:                 var(--color-brand-400);
+
+  /* ============================================================
+     5. COLOR — Liquid Glass tints
+     Utilities: bg-glass-frost, bg-glass-clear, bg-glass-tint, bg-glass-dark
+     ============================================================ */
+  --color-glass-clear: color-mix(in oklab, white 55%, transparent);
+  --color-glass-frost: color-mix(in oklab, white 72%, transparent);
+  --color-glass-tint:  color-mix(in oklab, var(--color-brand-50) 60%, transparent);
+  --color-glass-dark:  color-mix(in oklab, var(--color-ink-900) 55%, transparent);
+  --color-glass-edge:  color-mix(in oklab, white 80%, transparent);
+
+  /* ============================================================
+     6. TYPE — Families
+     Utilities: font-sans, font-serif, font-mono
+     ============================================================ */
+  --font-sans:  "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Newsreader", ui-serif, Georgia, "Times New Roman", serif;
+  --font-mono:  "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* ============================================================
+     7. TYPE — Scale (1.200 minor third, accessible floors)
+     Utilities: text-2xs, text-xs, text-sm, text-base, text-lg, ...
+     Body floor is 16px (text-base) — never smaller for paragraphs.
+     ============================================================ */
+  --text-2xs:   11px;
+  --text-2xs--line-height: 1.25;
+  --text-xs:    12px;
+  --text-xs--line-height:  1.25;
+  --text-sm:    14px;
+  --text-sm--line-height:  1.5;
+  --text-base:  16px;
+  --text-base--line-height: 1.5;
+  --text-lg:    18px;
+  --text-lg--line-height: 1.5;
+  --text-xl:    22px;
+  --text-xl--line-height: 1.25;
+  --text-2xl:   28px;
+  --text-2xl--line-height: 1.25;
+  --text-3xl:   36px;
+  --text-3xl--line-height: 1.25;
+  --text-4xl:   48px;
+  --text-4xl--line-height: 1.1;
+  --text-5xl:   64px;
+  --text-5xl--line-height: 1.1;
+  --text-6xl:   84px;
+  --text-6xl--line-height: 1.1;
+
+  --tracking-tighter: -0.02em;
+  --tracking-tight:   -0.01em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.04em;
+  --tracking-widest:  0.08em;
+
+  /* ============================================================
+     8. SPACING — 4-pt base
+     Tailwind's default --spacing of 0.25rem (4px) already matches.
+     ============================================================ */
+  --spacing: 4px;
+
+  /* ============================================================
+     9. RADII — Soft, generous
+     Utilities: rounded-xs, rounded-sm, rounded-md, rounded-lg, rounded-xl, rounded-2xl, rounded-pill
+     ============================================================ */
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-2xl:  32px;
+  --radius-pill: 9999px;
+
+  /* ============================================================
+     10. SHADOW — Layered + glass-aware
+     Utilities: shadow-1, shadow-2, shadow-3, shadow-4, shadow-glass, ring-focus
+     ============================================================ */
+  --shadow-1: 0 1px 2px 0 rgba(7, 7, 11, 0.04), 0 1px 1px 0 rgba(7, 7, 11, 0.03);
+  --shadow-2: 0 2px 4px -1px rgba(7, 7, 11, 0.06), 0 4px 8px -2px rgba(7, 7, 11, 0.06);
+  --shadow-3: 0 4px 8px -2px rgba(7, 7, 11, 0.08), 0 12px 24px -6px rgba(7, 7, 11, 0.10);
+  --shadow-4: 0 8px 16px -4px rgba(7, 7, 11, 0.10), 0 24px 48px -12px rgba(7, 7, 11, 0.14);
+  --shadow-glass:
+    0 1px 0 0 rgba(255, 255, 255, 0.6) inset,
+    0 -1px 1px 0 rgba(255, 255, 255, 0.3) inset,
+    0 12px 32px -8px rgba(7, 7, 11, 0.16),
+    0 2px 6px -2px rgba(7, 7, 11, 0.08);
+
+  /* ============================================================
+     11. MOTION
+     Utilities: ease-out, ease-in-out, ease-spring; duration-1..4
+     ============================================================ */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --duration-1: 120ms;
+  --duration-2: 200ms;
+  --duration-3: 320ms;
+  --duration-4: 500ms;
+
+  /* ============================================================
+     12. LAYOUT — Container widths
+     ============================================================ */
+  --container-sm:  640px;
+  --container-md:  768px;
+  --container-lg:  1024px;
+  --container-xl:  1280px;
+  --container-2xl: 1440px;
+}
+
+/* ============================================================
+   Dark theme — flips semantic surface roles
+   Apply by adding `class="dark"` to <html> or any ancestor.
+   ============================================================ */
+.dark {
+  --color-background:           var(--color-ink-1000);
+  --color-foreground:           var(--color-ink-50);
+
+  --color-card:                 var(--color-ink-900);
+  --color-card-foreground:      var(--color-ink-50);
+
+  --color-popover:              var(--color-ink-900);
+  --color-popover-foreground:   var(--color-ink-50);
+
+  --color-primary:              var(--color-brand-400);
+  --color-primary-foreground:   var(--color-ink-1000);
+
+  --color-secondary:            var(--color-ink-800);
+  --color-secondary-foreground: var(--color-ink-50);
+
+  --color-muted:                var(--color-ink-800);
+  --color-muted-foreground:     var(--color-ink-300);
+
+  --color-accent:               var(--color-ink-800);
+  --color-accent-foreground:    var(--color-brand-300);
+
+  --color-destructive:          var(--color-danger-500);
+  --color-destructive-foreground: var(--color-ink-0);
+
+  --color-border:               var(--color-ink-700);
+  --color-border-strong:        var(--color-ink-600);
+  --color-input:                var(--color-ink-700);
+  --color-ring:                 var(--color-brand-400);
+
+  --color-glass-clear: color-mix(in oklab, white 8%, transparent);
+  --color-glass-frost: color-mix(in oklab, white 14%, transparent);
+  --color-glass-tint:  color-mix(in oklab, var(--color-brand-400) 18%, transparent);
+  --color-glass-dark:  color-mix(in oklab, var(--color-ink-1000) 65%, transparent);
+  --color-glass-edge:  color-mix(in oklab, white 20%, transparent);
+
+  --shadow-glass:
+    0 1px 0 0 rgba(255, 255, 255, 0.12) inset,
+    0 -1px 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 12px 32px -8px rgba(0, 0, 0, 0.55),
+    0 2px 6px -2px rgba(0, 0, 0, 0.35);
+}
+
+/* ============================================================
+   Liquid Glass utilities — visual signature of Liquidaria.
+   Apply to floating surfaces (modals, toasts, popovers, sticky bars).
+   Never on static body cards.
+   ============================================================ */
+@utility glass {
+  background: var(--color-glass-frost);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid var(--color-glass-edge);
+  box-shadow: var(--shadow-glass);
+  border-radius: var(--radius-xl);
+}
+
+@utility glass-clear {
+  background: var(--color-glass-clear);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid var(--color-glass-edge);
+  box-shadow: var(--shadow-glass);
+  border-radius: var(--radius-xl);
+}
+
+@utility glass-tinted {
+  background: var(--color-glass-tint);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid var(--color-glass-edge);
+  box-shadow: var(--shadow-glass);
+  border-radius: var(--radius-xl);
+}
+
+@utility glass-dark {
+  background: var(--color-glass-dark);
+  color: var(--color-ink-0);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid var(--color-glass-edge);
+  box-shadow: var(--shadow-glass);
+  border-radius: var(--radius-xl);
+}
+
+/* ============================================================
+   Focus ring — applied globally for accessibility.
+   GovBr commitment kept verbatim.
+   ============================================================ */
+@layer base {
+  *:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-ring) 35%, transparent);
+    border-radius: inherit;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

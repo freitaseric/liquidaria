@@ -4,15 +4,15 @@ Monorepo for the **Liquidaria Design System** component library.
 
 ## Packages
 
-| Package | Version | Description |
-|---------|---------|-------------|
-| [`@liquidaria/tokens`](packages/tokens) | [![npm](https://img.shields.io/npm/v/@liquidaria/tokens)](https://www.npmjs.com/package/@liquidaria/tokens) | CSS design tokens |
-| [`@liquidaria/react`](packages/react) | [![npm](https://img.shields.io/npm/v/@liquidaria/react)](https://www.npmjs.com/package/@liquidaria/react) | React component library |
+| Package                                 | Version                                                                                                     | Description             |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------- |
+| [`@liquidaria/tokens`](packages/tokens) | [![npm](https://img.shields.io/npm/v/@liquidaria/tokens)](https://www.npmjs.com/package/@liquidaria/tokens) | CSS design tokens       |
+| [`@liquidaria/react`](packages/react)   | [![npm](https://img.shields.io/npm/v/@liquidaria/react)](https://www.npmjs.com/package/@liquidaria/react)   | React component library |
 
 ## Apps
 
-| App | Description |
-|-----|-------------|
+| App                      | Description                                        |
+| ------------------------ | -------------------------------------------------- |
 | [`apps/docs`](apps/docs) | Storybook — component playground and documentation |
 
 ## Development

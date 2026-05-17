@@ -3,9 +3,8 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "paths": {
-      "@liquidaria/tokens": ["../../packages/tokens/src/index.ts"],
       "@liquidaria/react": ["../../packages/react/src/index.ts"]
     }
   },
-  "include": [".storybook", "../../packages/react/src"]
+  "include": [".ladle", "vite.config.ts", "../../packages/react/src"]
 }

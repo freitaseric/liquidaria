@@ -1,25 +1,17 @@
 {
   "name": "@liquidaria/tokens",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MIT",
   "type": "module",
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
-    },
-    "./css": "./dist/colors_and_type.css"
+    ".": "./src/theme.css",
+    "./theme.css": "./src/theme.css"
   },
   "files": [
-    "dist"
+    "src/theme.css",
+    "README.md"
   ],
-  "scripts": {
-    "build": "vite build",
-    "dev": "vite build --watch"
-  },
-  "devDependencies": {
-    "vite": "^6.3.5",
-    "vite-plugin-dts": "^4.5.4"
+  "peerDependencies": {
+    "tailwindcss": ">=4"
   }
 }

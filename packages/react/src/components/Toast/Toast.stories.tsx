@@ -1,36 +1,78 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { StoryDefault } from '@ladle/react'
 import { Toast } from './Toast'
+import { Toaster, toast } from './Toaster'
 import { Button } from '../Button'
 
-const meta: Meta<typeof Toast> = {
+export default {
   title: 'Components/Toast',
-  component: Toast,
-  args: {
-    tone: 'neutral',
-    title: 'Operação concluída',
-    body: 'Suas alterações foram salvas com sucesso.',
-  },
-}
+} satisfies StoryDefault
 
-export default meta
-type Story = StoryObj<typeof Toast>
+export const Variants = () => (
+  <div className="flex max-w-120 flex-col gap-3">
+    {(['default', 'success', 'warning', 'destructive', 'info', 'solid'] as const).map((variant) => (
+      <Toast
+        key={variant}
+        variant={variant}
+        title="Operação concluída"
+        description="Suas alterações foram salvas com sucesso."
+        onDismiss={() => {}}
+      />
+    ))}
+  </div>
+)
 
-export const Tones: Story = {
-  render: (args) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 480 }}>
-      {(['neutral', 'success', 'dark'] as const).map((tone) => (
-        <Toast key={tone} {...args} tone={tone} onDismiss={() => {}} />
-      ))}
+export const WithAction = () => (
+  <Toast
+    title="Arquivo excluído"
+    action={
+      <Button variant="ghost" size="sm">
+        Desfazer
+      </Button>
+    }
+    onDismiss={() => {}}
+  />
+)
+
+export const Imperative = () => (
+  <div className="flex flex-col items-start gap-3">
+    <Toaster richColors closeButton position="bottom-right" />
+    <div className="flex flex-wrap gap-2">
+      <Button onClick={() => toast('Mensagem padrão')}>toast()</Button>
+      <Button variant="secondary" onClick={() => toast.success('Salvo com sucesso')}>
+        toast.success()
+      </Button>
+      <Button variant="secondary" onClick={() => toast.warning('Atenção: revise os dados')}>
+        toast.warning()
+      </Button>
+      <Button variant="destructive" onClick={() => toast.error('Falha ao processar a requisição')}>
+        toast.error()
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() =>
+          toast('Arquivo enviado', {
+            description: 'Disponível para download em alguns segundos.',
+            action: {
+              label: 'Desfazer',
+              onClick: () => toast.info('Ação desfeita'),
+            },
+          })
+        }
+      >
+        com action
+      </Button>
+      <Button
+        variant="ghost"
+        onClick={() =>
+          toast.promise(new Promise((r) => setTimeout(r, 1500)), {
+            loading: 'Salvando...',
+            success: 'Pronto!',
+            error: 'Erro inesperado',
+          })
+        }
+      >
+        toast.promise()
+      </Button>
     </div>
-  ),
-}
-
-export const WithAction: Story = {
-  args: {
-    tone: 'neutral',
-    title: 'Arquivo excluído',
-    body: undefined,
-    action: <Button variant="ghost" size="sm">Desfazer</Button>,
-    onDismiss: () => {},
-  },
-}
+  </div>
+)

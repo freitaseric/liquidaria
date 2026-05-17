@@ -1,38 +1,41 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { Icon } from './Icon'
+import type { Story, StoryDefault } from '@ladle/react'
+import { Icon, type IconProps } from './Icon'
 
-const meta: Meta<typeof Icon> = {
+export default {
   title: 'Components/Icon',
-  component: Icon,
-  args: {
-    name: 'Search',
-    size: 20,
-    strokeWidth: 1.75,
-    color: 'currentColor',
-  },
-}
+} satisfies StoryDefault
 
-export default meta
-type Story = StoryObj<typeof Icon>
+export const Sizes = () => (
+  <div className="flex items-center gap-4">
+    {([16, 20, 24, 32] as const).map((size) => (
+      <Icon key={size} name="Search" size={size} />
+    ))}
+  </div>
+)
 
-export const Playground: Story = {}
+export const Sampler = () => (
+  <div className="flex flex-wrap gap-4">
+    {(
+      ['Search', 'Bell', 'Settings', 'User', 'ArrowRight', 'Check', 'X', 'Eye', 'Plus', 'Moon', 'Sun'] as const
+    ).map((name) => (
+      <Icon key={name} name={name} />
+    ))}
+  </div>
+)
 
-export const Sizes: Story = {
-  render: (args) => (
-    <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-      {([16, 20, 24, 32] as const).map((size) => (
-        <Icon key={size} {...args} size={size} />
-      ))}
-    </div>
-  ),
-}
+export const Colored = () => (
+  <div className="flex items-center gap-4">
+    <Icon name="Heart" className="text-primary" />
+    <Icon name="Heart" className="text-success-700" />
+    <Icon name="Heart" className="text-warning-700" />
+    <Icon name="Heart" className="text-destructive" />
+    <Icon name="Heart" className="text-muted-foreground" />
+  </div>
+)
 
-export const Sampler: Story = {
-  render: (args) => (
-    <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-      {(['Search', 'Bell', 'Settings', 'User', 'ArrowRight', 'Check', 'X', 'Eye', 'Plus', 'Moon', 'Sun'] as const).map((name) => (
-        <Icon key={name} {...args} name={name} />
-      ))}
-    </div>
-  ),
+export const Playground: Story<IconProps> = (args) => <Icon {...args} />
+Playground.args = {
+  name: 'Search',
+  size: 20,
+  strokeWidth: 1.75,
 }

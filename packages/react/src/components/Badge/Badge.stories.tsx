@@ -1,43 +1,28 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { Pill } from './Pill'
+import type { StoryDefault } from '@ladle/react'
+import { Badge } from './Badge'
 
-const meta: Meta<typeof Pill> = {
-  title: 'Components/Pill',
-  component: Pill,
-  args: {
-    children: 'Label',
-    tone: 'neutral',
-  },
-}
+export default {
+  title: 'Components/Badge',
+} satisfies StoryDefault
 
-export default meta
-type Story = StoryObj<typeof Pill>
+export const Variants = () => (
+  <div className="flex flex-wrap items-center gap-2">
+    {(
+      ['default', 'secondary', 'outline', 'success', 'warning', 'destructive', 'info', 'solid'] as const
+    ).map((variant) => (
+      <Badge key={variant} variant={variant}>
+        {variant}
+      </Badge>
+    ))}
+  </div>
+)
 
-export const Tones: Story = {
-  render: (args) => (
-    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
-      {(['neutral', 'brand', 'success', 'warning', 'danger', 'info'] as const).map((tone) => (
-        <Pill key={tone} {...args} tone={tone}>{tone}</Pill>
-      ))}
-    </div>
-  ),
-}
-
-export const WithDot: Story = {
-  render: (args) => (
-    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-      {(['success', 'warning', 'danger'] as const).map((tone) => (
-        <Pill key={tone} {...args} tone={tone} dot>{tone}</Pill>
-      ))}
-    </div>
-  ),
-}
-
-export const Active: Story = {
-  render: (args) => (
-    <div style={{ display: 'flex', gap: 8 }}>
-      <Pill {...args} tone="neutral">Inativo</Pill>
-      <Pill {...args} tone="neutral" active>Ativo</Pill>
-    </div>
-  ),
-}
+export const WithDot = () => (
+  <div className="flex flex-wrap gap-2">
+    {(['success', 'warning', 'destructive'] as const).map((variant) => (
+      <Badge key={variant} variant={variant} dot>
+        {variant}
+      </Badge>
+    ))}
+  </div>
+)

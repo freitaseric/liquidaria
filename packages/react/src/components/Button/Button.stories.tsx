@@ -1,45 +1,63 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { Button } from './Button'
+import type { Story, StoryDefault } from '@ladle/react'
+import { Button, type ButtonProps } from './Button'
+import { Icon } from '../Icon'
 
-const meta: Meta<typeof Button> = {
+export default {
   title: 'Components/Button',
-  component: Button,
-  args: {
-    children: 'Label',
-    variant: 'primary',
-    size: 'md',
-    disabled: false,
-    full: false,
+} satisfies StoryDefault
+
+export const Variants = () => (
+  <div className="flex flex-wrap items-center gap-3">
+    {(['default', 'destructive', 'outline', 'secondary', 'ghost', 'link', 'glass'] as const).map(
+      (variant) => (
+        <Button key={variant} variant={variant}>
+          {variant}
+        </Button>
+      ),
+    )}
+  </div>
+)
+
+export const Sizes = () => (
+  <div className="flex items-center gap-3">
+    {(['sm', 'md', 'lg'] as const).map((size) => (
+      <Button key={size} size={size}>
+        {size}
+      </Button>
+    ))}
+    <Button size="icon" aria-label="Settings">
+      <Icon name="Settings" />
+    </Button>
+  </div>
+)
+
+export const WithIcon = () => (
+  <Button>
+    <Icon name="Search" />
+    Buscar
+  </Button>
+)
+
+export const Loading = () => <Button loading>Salvando...</Button>
+
+export const Disabled = () => <Button disabled>Indisponível</Button>
+
+export const Playground: Story<ButtonProps> = (args) => <Button {...args} />
+Playground.args = {
+  children: 'Label',
+  variant: 'default',
+  size: 'md',
+  disabled: false,
+  loading: false,
+  fullWidth: false,
+}
+Playground.argTypes = {
+  variant: {
+    options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link', 'glass'],
+    control: { type: 'select' },
   },
-}
-
-export default meta
-type Story = StoryObj<typeof Button>
-
-export const Variants: Story = {
-  render: (args) => (
-    <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-      {(['primary', 'ink', 'secondary', 'ghost', 'danger'] as const).map((variant) => (
-        <Button key={variant} {...args} variant={variant}>{variant}</Button>
-      ))}
-    </div>
-  ),
-}
-
-export const Sizes: Story = {
-  render: (args) => (
-    <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-      {(['sm', 'md', 'lg'] as const).map((size) => (
-        <Button key={size} {...args} size={size}>{size}</Button>
-      ))}
-    </div>
-  ),
-}
-
-export const WithIcon: Story = {
-  args: { icon: 'Search', children: 'Buscar' },
-}
-
-export const Disabled: Story = {
-  args: { disabled: true },
+  size: {
+    options: ['sm', 'md', 'lg', 'icon'],
+    control: { type: 'select' },
+  },
 }

@@ -1,59 +1,44 @@
 import React from 'react'
+import { cn } from '../../lib/cn'
 
-export interface SwitchProps extends Omit<React.HTMLAttributes<HTMLLabelElement>, 'onChange'> {
+export interface SwitchProps
+  extends Omit<React.HTMLAttributes<HTMLButtonElement>, 'onChange'> {
   checked: boolean
-  onChange?: (checked: boolean) => void
-  label?: string
+  onCheckedChange?: (checked: boolean) => void
   disabled?: boolean
 }
 
-export const Switch = React.forwardRef<HTMLLabelElement, SwitchProps>(
-  ({ checked, onChange, label, disabled, style, ...rest }, ref) => (
-    <label
+export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
+  ({ className, checked, onCheckedChange, disabled, ...rest }, ref) => (
+    <button
       ref={ref}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 10,
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 0.5 : 1,
-        font: '500 14px var(--font-sans)',
-        color: checked ? 'var(--fg)' : 'var(--fg-muted)',
-        ...style,
-      }}
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      data-state={checked ? 'checked' : 'unchecked'}
+      data-slot="switch"
+      disabled={disabled}
+      onClick={() => !disabled && onCheckedChange?.(!checked)}
+      className={cn(
+        'inline-flex h-6.5 w-11 shrink-0 cursor-pointer items-center rounded-pill',
+        'transition-colors duration-2 ease-out',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/35',
+        'disabled:cursor-not-allowed disabled:opacity-50',
+        checked ? 'bg-primary' : 'bg-ink-200 dark:bg-ink-700',
+        className,
+      )}
       {...rest}
     >
       <span
-        role="switch"
-        aria-checked={checked}
-        onClick={() => !disabled && onChange?.(!checked)}
-        style={{
-          width: 44,
-          height: 26,
-          borderRadius: 999,
-          background: checked ? 'var(--brand-500)' : 'var(--ink-200)',
-          position: 'relative',
-          transition: 'background var(--dur-2) var(--ease-out)',
-          flexShrink: 0,
-        }}
-      >
-        <span
-          style={{
-            position: 'absolute',
-            top: 2,
-            left: checked ? 20 : 2,
-            width: 22,
-            height: 22,
-            borderRadius: '50%',
-            background: '#fff',
-            boxShadow: '0 2px 4px rgba(7,7,11,.18)',
-            transition: 'left var(--dur-2) var(--ease-spring)',
-          }}
-        />
-      </span>
-      {label}
-    </label>
-  )
+        aria-hidden
+        className={cn(
+          'pointer-events-none block size-5.5 rounded-full bg-card shadow-1',
+          'transition-transform duration-2 ease-spring',
+          checked ? 'translate-x-5' : 'translate-x-0.5',
+        )}
+      />
+    </button>
+  ),
 )
 
 Switch.displayName = 'Switch'
